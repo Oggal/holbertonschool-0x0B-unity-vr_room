@@ -29,21 +29,14 @@ public class LocomotionController : MonoBehaviour
         targetRetical.SetActive(targetPos != null);
     }
 
-    Vector3? GetNewPos(){
-        
-        Vector3? newPos = null;
+    Vector3? GetNewPos()
+    {    
         RaycastHit hit;
-
         if (!Physics.Raycast(transform.position, transform.forward, out hit, 10f, layerMask))
-        {
             return null;
-        }
         if (Vector3.Distance(Vector3.up, hit.normal) > 0.2f)
-        {
             return null;
-        }
-        newPos = hit.point;
-        return newPos;
+        return hit.point;
     }
 
     private GameObject BuildDebugReticule()
