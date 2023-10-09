@@ -7,3 +7,8 @@ Requires:
     - OpenXR Plugin
     - XR Interaction Toolkit
         -Starter Assets
+
+Assets Provided By Holberton:
+
+spe_arvr_resources
+    - https://github.com/hs-hq/spe_arvr_resources
