@@ -26,10 +26,6 @@ public class LocomotionController : MonoBehaviour
         targetRetical.SetActive(lastPos != null);
     }
 
-    void LateUpdate()
-    {
-        lastPos = null;
-    }
 
     /// <summary>
     /// Returns a new position to move to if valid, otherwise returns null
@@ -49,6 +45,16 @@ public class LocomotionController : MonoBehaviour
         if (Vector3.Distance(Vector3.up, hit.normal) > 0.2f)
             return null;
         return lastPos = hit.point;
+    }
+
+    public void Teleport(GameObject g = null)
+    {
+        if (g == null) g = gameObject;
+        if (lastPos != null)
+        {
+            g.transform.position = (Vector3)lastPos;
+            lastPos = null;
+        }
     }
 
     private GameObject BuildDebugReticule()

@@ -22,7 +22,7 @@ public class XR_InputController : MonoBehaviour
     void Start()
     {
         teleport.performed += Teleport;
-        teleport.canceled += DoTeleport;
+        teleport.canceled += c => locomotionController.Teleport();
     }
 
     // OnEnable is called when the object becomes enabled and active
@@ -56,30 +56,22 @@ public class XR_InputController : MonoBehaviour
         // Debug.Log(context);
         // Debug.Log(context.action);
         InputDevice device = context.control.device;
-        if (device as XRController != null)
+        if (device as XRController == null)
+            return;
+        XRController controller = (XRController)device;
+        if (controller == XRController.leftHand)
         {
-            XRController controller = (XRController)device;
-            if (controller == XRController.leftHand)
-            {
-                Vector3 start = transform.position + leftControllerPosition.action.ReadValue<Vector3>();
-                targetPos = locomotionController.GetNewPos(
-                    start,
-                    leftControllerRotation.action.ReadValue<Quaternion>() * Vector3.forward);
-            }
-            else if (controller == XRController.rightHand)
-            {
-                Debug.Log("Teleport triggered by right XR controller");
-            }
+            targetPos = locomotionController.GetNewPos(
+                transform.position + leftControllerPosition.action.ReadValue<Vector3>(),
+                leftControllerRotation.action.ReadValue<Quaternion>() * Vector3.forward);
         }
-    }
-
-    void DoTeleport(InputAction.CallbackContext context)
-    {
-        if (targetPos != null)
+        else if (controller == XRController.rightHand)
         {
-            transform.position = (Vector3)targetPos;
-            targetPos = null;
+            targetPos = locomotionController.GetNewPos(
+                transform.position + rightControllerPosition.action.ReadValue<Vector3>(),
+                rightControllerRotation.action.ReadValue<Quaternion>() * Vector3.forward);
         }
+        
     }
 
 }
