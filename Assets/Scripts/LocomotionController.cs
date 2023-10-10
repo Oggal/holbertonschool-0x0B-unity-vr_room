@@ -9,34 +9,46 @@ public class LocomotionController : MonoBehaviour
     public LayerMask layerMask;
 
     public GameObject targetRetical;
+    Vector3? lastPos = null;
     // Start is called before the first frame update
     void Start()
     {
-        if (targetRetical == null)
-        {
-            targetRetical = BuildDebugReticule();
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3? targetPos = GetNewPos();
-        if (targetPos != null)
+        if (lastPos != null && targetRetical != null)
         {
-            targetRetical.transform.position = (Vector3)targetPos;
+            targetRetical.transform.position = (Vector3)lastPos;
         }
-        targetRetical.SetActive(targetPos != null);
+
+        targetRetical.SetActive(lastPos != null);
     }
 
-    Vector3? GetNewPos()
+    void LateUpdate()
+    {
+        lastPos = null;
+    }
+
+    /// <summary>
+    /// Returns a new position to move to if valid, otherwise returns null
+    /// </summary>
+    /// <param name="rayStart"> start of ray</param>
+    /// <param name="targetDir"> direction to cast ray</param>
+    /// <returns> new pos or null</returns>
+    public Vector3? GetNewPos(Vector3 rayStart = default(Vector3), Vector3 targetDir = default(Vector3))
     {    
+        if (targetDir.magnitude < 0.1f)
+            return targetDir = transform.forward;
+        if (rayStart.magnitude < 0.1f)
+            rayStart = transform.position;
         RaycastHit hit;
-        if (!Physics.Raycast(transform.position, transform.forward, out hit, 10f, layerMask))
+        if (!Physics.Raycast(rayStart, targetDir, out hit, 10f, layerMask))
             return null;
         if (Vector3.Distance(Vector3.up, hit.normal) > 0.2f)
             return null;
-        return hit.point;
+        return lastPos = hit.point;
     }
 
     private GameObject BuildDebugReticule()

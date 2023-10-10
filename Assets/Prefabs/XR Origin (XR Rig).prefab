@@ -677,7 +677,6 @@ GameObject:
   - component: {fileID: 1898067525046690160}
   - component: {fileID: 7018245760540651912}
   - component: {fileID: 2292105352150336580}
-  - component: {fileID: 4148339441789689077}
   m_Layer: 0
   m_Name: Left Controller
   m_TagString: Untagged
@@ -1293,22 +1292,6 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_SortAtRoot: 0
---- !u!114 &4148339441789689077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6426516896802098376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8790dbc49bca4b94398b23d1a3126712, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 51
-  targetRetical: {fileID: 0}
 --- !u!1 &7000947080818551349
 GameObject:
   m_ObjectHideFlags: 0
