@@ -9,20 +9,25 @@ using UnityEngine.InputSystem.XR;
 public class XR_InputController : MonoBehaviour
 {
     [SerializeField] InputAction teleport;
-    [SerializeField] InputAction grab;
+    [SerializeField] public InputAction grab;
     InputAction use;
 
     [SerializeField] InputActionReference rightControllerPosition,
         leftControllerPosition,
         rightControllerRotation,
-        leftControllerRotation;
+        leftControllerRotation,
+        HMDPosition;
     [SerializeField] LocomotionController locomotionController;
     Vector3? targetPos = null;
     // Start is called before the first frame update
     void Start()
     {
         teleport.performed += Teleport;
-        teleport.canceled += c => locomotionController.Teleport();
+        teleport.canceled += c => locomotionController.Teleport(
+            Vector3.Scale(
+                HMDPosition.action.ReadValue<Vector3>(),
+                new Vector3(-1,0,-1))
+            );
     }
 
     // OnEnable is called when the object becomes enabled and active
@@ -40,16 +45,6 @@ public class XR_InputController : MonoBehaviour
         grab.Disable();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Debug.Log(string.Format("Grip {0}",grab.ReadValue<float>().ToString()));
-        if(targetPos != null)
-        {
-            Debug.Log(targetPos);
-        }
-        
-    }
 
     void Teleport(InputAction.CallbackContext context)
     {

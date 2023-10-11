@@ -47,12 +47,13 @@ public class LocomotionController : MonoBehaviour
         return lastPos = hit.point;
     }
 
-    public void Teleport(GameObject g = null)
+    public void Teleport(Vector3? pos = null)
     {
-        if (g == null) g = gameObject;
+        if(pos.HasValue)
+            lastPos += pos.Value;
         if (lastPos != null)
         {
-            g.transform.position = (Vector3)lastPos;
+            transform.position = (Vector3)lastPos;
             lastPos = null;
         }
     }
