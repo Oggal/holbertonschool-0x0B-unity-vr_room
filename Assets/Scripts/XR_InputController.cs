@@ -19,15 +19,12 @@ public class XR_InputController : MonoBehaviour
         HMDPosition;
     [SerializeField] LocomotionController locomotionController;
     Vector3? targetPos = null;
+    Vector3? debugPos = null;
     // Start is called before the first frame update
     void Start()
     {
         teleport.performed += Teleport;
-        teleport.canceled += c => locomotionController.Teleport(
-            Vector3.Scale(
-                HMDPosition.action.ReadValue<Vector3>(),
-                new Vector3(-1,0,-1))
-            );
+        teleport.canceled += DoTeleport;
     }
 
     // OnEnable is called when the object becomes enabled and active
@@ -43,6 +40,11 @@ public class XR_InputController : MonoBehaviour
     {
         teleport.Disable();
         grab.Disable();
+    }
+    void OnDrawGizmos()
+    {
+        if(debugPos.HasValue)
+            Gizmos.DrawSphere(debugPos.Value,0.5f);
     }
 
 
@@ -67,6 +69,18 @@ public class XR_InputController : MonoBehaviour
                 rightControllerRotation.action.ReadValue<Quaternion>() * Vector3.forward);
         }
         
+    }
+
+    void DoTeleport(InputAction.CallbackContext context)
+    {
+        locomotionController.Teleport(
+            Vector3.Scale(
+                HMDPosition.action.ReadValue<Vector3>(),
+                new Vector3(-1,0,-1))
+            );
+            debugPos = Vector3.Scale(
+                HMDPosition.action.ReadValue<Vector3>(),
+                new Vector3(-1,0,-1));
     }
 
 }
