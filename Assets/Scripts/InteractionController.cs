@@ -38,13 +38,14 @@ public class InteractionController : MonoBehaviour
         if(particles != null )
         {  
             var main  = particles.main;
-            if(target.Count > 0)
+            if(target.Count > 0 )
             {
                 Usable item = target[0];
                 var shape = particles.shape;
                 main.customSimulationSpace = item.transform;
                 shape.meshRenderer = item.GetComponent<MeshRenderer>();
-                particles.Play();
+                if (!particles.isPlaying)
+                    particles.Play();
             
             } else {
                 particles.Stop();
