@@ -423,8 +423,17 @@ LineRenderer:
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1191,8 +1200,17 @@ LineRenderer:
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1527,11 +1545,33 @@ MonoBehaviour:
       m_Action: Grab
       m_Flags: 0
     m_Flags: 0
+  use:
+    m_Name: Use
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 9855094c-f3d5-4507-9e0a-6f26fc99dff3
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 8c135d47-9368-47f1-b332-f0701d92e481
+      m_Path: <ValveIndexController>/primaryButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Use
+      m_Flags: 0
+    m_Flags: 0
   rightControllerPosition: {fileID: -3326005586356538449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   leftControllerPosition: {fileID: -2024308242397127297, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightControllerRotation: {fileID: 5101698808175986029, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   leftControllerRotation: {fileID: 8248158260566104461, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  HMDPosition: {fileID: 0}
   locomotionController: {fileID: 242243448249107490}
+  leftGrab: {fileID: 0}
+  rightGrab: {fileID: 0}
+  leftInteraction: {fileID: 0}
+  rightInteraction: {fileID: 0}
 --- !u!114 &242243448249107490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1659,10 +1699,10 @@ MonoBehaviour:
   m_PositionInput:
     m_UseReference: 0
     m_Action:
-      m_Name: Position Input
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 26067647-34c9-4d07-83a4-29005c19b403
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1671,10 +1711,10 @@ MonoBehaviour:
   m_RotationInput:
     m_UseReference: 0
     m_Action:
-      m_Name: Rotation Input
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 9bfe2333-deca-43c0-917e-c6277759b8ef
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []

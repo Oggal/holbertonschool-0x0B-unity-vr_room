@@ -6,6 +6,9 @@ using UnityEngine;
 public class GrabController : MonoBehaviour
 {
     // Start is called before the first frame update
+    enum Hand { Left, Right };
+
+    [SerializeField] Hand hand = Hand.Right;
     GameObject target;
     GameObject grabbedObject;
 
@@ -18,8 +21,12 @@ public class GrabController : MonoBehaviour
         if(parent != null)
         {
             // this needs refactored
-            parent.grab.started += cxt => OnGrab();
-            parent.grab.canceled += cxt => OnGrabRelease();
+            if(hand == Hand.Left)
+            {
+                parent.leftGrab = this;
+            } else {
+                parent.rightGrab = this;
+            }
         }else
         {
             Debug.LogError("GrabController needs to be a child of an XR_InputController");
@@ -37,7 +44,7 @@ public class GrabController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.GetComponent<Rigidbody>() != null)
+        if(other.gameObject.GetComponent<Rigidbody>() != null && !other.gameObject.GetComponent<Rigidbody>().isKinematic && other.gameObject.GetComponent<GrabController>() == null)
         {
             target = other.gameObject;
         }
@@ -45,23 +52,19 @@ public class GrabController : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        target = null;
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        if(other.gameObject.GetComponent<Rigidbody>() != null)
+        if(other.gameObject == target)
         {
-            target = other.gameObject;
+            target = null;
         }
     }
 
-    void OnGrab()
+
+    public void OnGrab()
     {
         Grab();
     }
 
-    void OnGrabRelease()
+    public void OnGrabRelease()
     {
         Drop();
     }

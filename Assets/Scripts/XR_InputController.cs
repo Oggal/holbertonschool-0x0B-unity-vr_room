@@ -10,7 +10,7 @@ public class XR_InputController : MonoBehaviour
 {
     [SerializeField] InputAction teleport;
     [SerializeField] public InputAction grab;
-    InputAction use;
+    [SerializeField ]InputAction use;
 
     [SerializeField] InputActionReference rightControllerPosition,
         leftControllerPosition,
@@ -20,11 +20,18 @@ public class XR_InputController : MonoBehaviour
     [SerializeField] LocomotionController locomotionController;
     Vector3? targetPos = null;
     Vector3? debugPos = null;
+
+    public GrabController leftGrab, rightGrab;
+    public InteractionController leftInteraction, rightInteraction;
     // Start is called before the first frame update
     void Start()
     {
         teleport.performed += Teleport;
         teleport.canceled += DoTeleport;
+        grab.started += DoGrab;
+        grab.canceled += DoDrop;
+        use.started += DoInteract;
+
     }
 
     // OnEnable is called when the object becomes enabled and active
@@ -32,6 +39,7 @@ public class XR_InputController : MonoBehaviour
     {
         teleport.Enable();
         grab.Enable();
+        use.Enable();
         
     }
 
@@ -40,6 +48,7 @@ public class XR_InputController : MonoBehaviour
     {
         teleport.Disable();
         grab.Disable();
+        use.Disable();
     }
     void OnDrawGizmos()
     {
@@ -83,4 +92,51 @@ public class XR_InputController : MonoBehaviour
                 new Vector3(-1,0,-1));
     }
 
+    void DoGrab(InputAction.CallbackContext context)
+    {
+        InputDevice device = context.control.device;
+        if (device as XRController == null)
+            return;
+        XRController controller = (XRController)device;
+        if (controller == XRController.leftHand)
+        {
+            leftGrab.OnGrab();
+        }
+        else if (controller == XRController.rightHand)
+        {
+            rightGrab.OnGrab();
+        }
+    }
+
+    void DoDrop(InputAction.CallbackContext context)
+    {
+        InputDevice device = context.control.device;
+        if (device as XRController == null)
+            return;
+        XRController controller = (XRController)device;
+        if (controller == XRController.leftHand)
+        {
+            leftGrab.OnGrabRelease();
+        }
+        else if (controller == XRController.rightHand)
+        {
+            rightGrab.OnGrabRelease();
+        }
+    }
+
+    void DoInteract(InputAction.CallbackContext context)
+    {
+        InputDevice device = context.control.device;
+        if (device as XRController == null)
+            return;
+        XRController controller = (XRController)device;
+        if (controller == XRController.leftHand)
+        {
+            leftInteraction.OnUse();
+        }
+        else if (controller == XRController.rightHand)
+        {
+            rightInteraction.OnUse();
+        }
+    }
 }
