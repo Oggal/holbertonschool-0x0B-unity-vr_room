@@ -9,7 +9,10 @@ public class GrabController : MonoBehaviour
     enum Hand { Left, Right };
 
     [SerializeField] Hand hand = Hand.Right;
+    [SerializeField] Color color;
+
     GameObject target;
+    InteractionParticleController visual; 
     GameObject grabbedObject;
 
     Vector3 lastPos, lastRot;
@@ -27,10 +30,17 @@ public class GrabController : MonoBehaviour
             } else {
                 parent.rightGrab = this;
             }
-        }else
+        }
+        else
         {
             Debug.LogError("GrabController needs to be a child of an XR_InputController");
         }
+        visual = GetComponent<InteractionParticleController>();
+        if( visual == null)
+        {
+            Debug.Log(hand.ToString() + ": No partical Controller");
+        }
+
     }
 
     // Update is called once per frame
@@ -47,6 +57,8 @@ public class GrabController : MonoBehaviour
         if(other.gameObject.GetComponent<Rigidbody>() != null && !other.gameObject.GetComponent<Rigidbody>().isKinematic && other.gameObject.GetComponent<GrabController>() == null)
         {
             target = other.gameObject;
+            if(visual != null)
+                visual.AddTarget(target,color);
         }
     }
 
@@ -56,6 +68,8 @@ public class GrabController : MonoBehaviour
         {
             target = null;
         }
+        if(visual != null)
+            visual.RemoveTarget(other.gameObject);
     }
 
 
@@ -79,15 +93,17 @@ public class GrabController : MonoBehaviour
         rb.isKinematic = false;
         rb.velocity = velocity;
         rb.angularVelocity = angularVelocity;
+        //visual.AddTarget(grabbedObject,color);
         grabbedObject = null;
+        
     }
 
     void Grab()
     {
         if (target == null)
             return;
-
         grabbedObject = target;
+        visual.RemoveTarget(grabbedObject);
         grabbedObject.transform.parent = transform;
         grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
     }

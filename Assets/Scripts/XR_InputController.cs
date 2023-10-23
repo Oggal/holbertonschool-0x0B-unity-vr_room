@@ -87,9 +87,6 @@ public class XR_InputController : MonoBehaviour
                 HMDPosition.action.ReadValue<Vector3>(),
                 new Vector3(-1,0,-1))
             );
-            debugPos = Vector3.Scale(
-                HMDPosition.action.ReadValue<Vector3>(),
-                new Vector3(-1,0,-1));
     }
 
     void DoGrab(InputAction.CallbackContext context)

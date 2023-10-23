@@ -6,8 +6,9 @@ public class InteractionController : MonoBehaviour
 {
     enum Hand { Left, Right };
     [SerializeField] Hand hand = Hand.Right;
+    [SerializeField] Color color;
     XR_InputController parent;
-    ParticleSystem particles;
+    InteractionParticleController visual;    
     List<Usable> target;
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class InteractionController : MonoBehaviour
             Debug.LogError("InteractionController needs to be a child of an XR_InputController");
         }
         target = new List<Usable>();
-        particles = GetComponentInChildren<ParticleSystem>();
+        visual = GetComponent<InteractionParticleController>();
     }
 
     void OnDisable()
@@ -35,23 +36,7 @@ public class InteractionController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(particles != null )
-        {  
-            var main  = particles.main;
-            if(target.Count > 0 )
-            {
-                Usable item = target[0];
-                var shape = particles.shape;
-                main.customSimulationSpace = item.transform;
-                shape.meshRenderer = item.GetComponent<MeshRenderer>();
-                if (!particles.isPlaying)
-                    particles.Play();
-            
-            } else {
-                particles.Stop();
-                particles.Clear();
-            }
-        }
+        
     }
 
 
@@ -62,6 +47,7 @@ public class InteractionController : MonoBehaviour
         if(item != null && !target.Contains(item))
         {
             target.Insert(0, item);
+            visual.AddTarget(other.gameObject,color);
         }
     }
 
@@ -72,6 +58,7 @@ public class InteractionController : MonoBehaviour
         if(item != null && target.Contains(item))
         {
             target.Remove(item);
+            visual.RemoveTarget(other.gameObject);
         }
     }
 

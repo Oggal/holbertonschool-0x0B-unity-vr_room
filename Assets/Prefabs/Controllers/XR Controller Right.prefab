@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 8221341587375392422}
   - component: {fileID: -7944467021821911103}
   - component: {fileID: 4776190046605096635}
+  - component: {fileID: 4709218578348447228}
   m_Layer: 0
   m_Name: XR Controller Right
   m_TagString: Untagged
@@ -443,6 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: 1
+  color: {r: 0, g: 0.39215687, b: 0, a: 0}
 --- !u!114 &8221341587375392422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: 1
+  color: {r: 0, g: 0, b: 0.39215687, a: 0}
 --- !u!199 &-7944467021821911103
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -496,7 +499,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1309948861
-  m_SortingLayer: -1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -544,8 +547,8 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
   looping: 1
-  prewarm: 0
-  playOnAwake: 0
+  prewarm: 1
+  playOnAwake: 1
   useUnscaledTime: 1
   autoRandomSeed: 1
   startDelay:
@@ -1365,7 +1368,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5309,6 +5312,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &4709218578348447228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283425761326543017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1826ea2857c5b8e49ac9e146530d6df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 4776190046605096635}
 --- !u!1 &6118169511635425143
 GameObject:
   m_ObjectHideFlags: 0
